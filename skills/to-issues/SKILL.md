@@ -12,7 +12,9 @@ Quebra um plano em tarefas independentemente "pegáveis" usando fatias verticais
 ## Processo
  
 ### 1. Reunir contexto
- 
+
+Primeiro, fixe a raiz do projeto: use o diretório de trabalho com código; se o usuário indicar um caminho ou repositório, use-o; se não houver projeto identificável, pergunte onde fica. A pasta `.tasks/` mora na raiz.
+
 Trabalhe com o que já está no contexto da conversa. Se o usuário passar um caminho de arquivo (plano, spec, PRD) como argumento, leia o arquivo inteiro antes de começar.
  
 Se o usuário indicar uma pasta de destino, use-a. Caso contrário:
@@ -53,7 +55,9 @@ Pergunte ao usuário:
 Itere até o usuário aprovar a quebra. Não escreva arquivos antes da aprovação.
  
 ### 5. Gerar os arquivos
- 
+
+Guarda de colisão: se `.tasks/<slug>/` já contém arquivos `NN-*.md`, **pare antes de escrever**. Liste o que existe e pergunte se é para (a) numerar a partir do próximo livre, (b) usar outro slug, ou (c) regenerar do zero. **Nunca sobrescreva** uma task com status `em-andamento` ou `concluida` sem confirmação — o índice pode refletir trabalho já feito.
+
 Crie a pasta de destino e, dentro dela:
  
 **a) Um arquivo por fatia**, nomeado `NN-slug-curto.md` (numeração em ordem de dependência: bloqueadores primeiro, começando em `01`). Use o template abaixo.

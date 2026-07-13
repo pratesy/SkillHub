@@ -29,18 +29,27 @@ description: >
 
 # Nome da Skill
 
-Instruções detalhadas para o Claude seguir quando esta skill estiver ativa.
+Uma ou duas linhas dizendo quem a skill é e o que ela explicitamente NÃO faz.
 
-## Quando usar
-- Situação A
-- Situação B
+## Passo 0 — <primeiro passo, ex.: fixar contexto / raiz do projeto>
+O que fazer, de forma acionável.
 
-## Como funciona
-Passo a passo do que o Claude deve fazer.
+## Passo 1 — <próximo passo>
+...
 
-## Exemplos
-Exemplos de entrada e saída esperada.
+## Passo N — <último passo, ex.: relatório e encerramento>
+...
+
+## Regras rígidas
+- Invariantes que a skill nunca pode violar.
 ```
+
+**Estrutura do corpo — convenção do hub:** as skills deste repositório usam **passos
+numerados na ordem de execução** (`## Passo N — ...`) seguidos de `## Regras rígidas`, não
+seções soltas do tipo "Quando usar / Como funciona". Todo o "quando usar" mora na
+`description` (é lá que o triggering acontece); o corpo é o procedimento. Skills que fazem
+parte do pipeline devem se conformar a [`docs/pipeline.md`](docs/pipeline.md) — a espinha
+canônica (estados da tarefa, escape anti-loop).
 
 ---
 

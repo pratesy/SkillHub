@@ -42,6 +42,7 @@ skill-hub/
 |-------|----------------------|-------|
 | [`req-gathering`](#req-gathering) | Transforma uma ideia bruta em spec técnica aprovada, antes de qualquer código | @gyga |
 | [`to-issues`](#to-issues) | Quebra uma spec ou plano em tasks independentes (fatias verticais) prontas para execução | @gyga |
+| [`task-executor`](#task-executor) | Executa uma fatia vertical (`NN-*.md`), valida com comando real e fecha o status no índice | @gyga |
 
 > Atualize esta tabela ao adicionar uma nova skill.
 
@@ -81,6 +82,26 @@ A skill gera uma pasta de arquivos numerados:
 **Fluxo natural com `req-gathering`:** `req-gathering` gera a spec → você aprova → `to-issues` quebra em tasks dentro da mesma pasta `.tasks/<slug>/` → um agente (ou você) executa task por task.
 
 **Saída:** `.tasks/<slug>/00-index.md` + `NN-slug.md` para cada fatia.
+
+---
+
+### `task-executor`
+
+**O problema:** o `to-issues` monta o `00-index.md` com status e regra de retomada, mas ninguém alimenta esse aparato — as tasks ficam paradas esperando quem as implemente e marque como feitas.
+
+**O que faz:** executa **uma** fatia vertical por vez. A skill:
+
+1. Fixa a raiz e descobre a task de forma inequívoca — se houver mais de uma pendente, **pergunta** em vez de escolher
+2. Respeita o **seam** da spec e as **Interfaces (Consome/Produz)** da task — só implementa aquela fatia, sem expandir escopo
+3. Valida com **comando real e saída colada** — proibido declarar "testes passando" sem evidência
+4. Fecha o loop: atualiza `status` no frontmatter do `NN-*.md` **e** na tabela do `00-index.md`
+5. Emite um relatório que é o **contrato de entrada do futuro reviewer**
+
+**Quando dispara:** "implementa a task", "executa a fatia", "pega a próxima task", "roda a 03", "continua de onde parou", ou ao apontar para um `NN-*.md`.
+
+**Pipeline completo:** `req-gathering` (spec) → `to-issues` (fatias) → **`task-executor`** (implementa cada fatia) → *reviewer* (próximo ciclo, ainda não construído). Ver [`docs/pipeline.md`](docs/pipeline.md) para a espinha canônica compartilhada com o time de agentes.
+
+**Saída:** código da fatia + `status` atualizado no `NN-*.md` e no `00-index.md` + relatório de execução.
 
 ---
 

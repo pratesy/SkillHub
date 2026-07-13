@@ -42,18 +42,25 @@ description: >
 
 # Nome da Skill
 
-Instruções para o Claude seguir quando a skill estiver ativa.
+Uma ou duas linhas: quem a skill é e o que ela explicitamente NÃO faz.
 
-## Quando usar
-- Situação A
-- Situação B
+## Passo 0 — <primeiro passo>
+Ação concreta.
 
-## Como funciona
-Passo a passo do que fazer.
+## Passo 1 — <próximo passo>
+...
 
-## Exemplos
-Entrada e saída esperada.
+## Passo N — <relatório / encerramento>
+...
+
+## Regras rígidas
+- Invariantes que nunca podem ser violadas.
 ```
+
+**Convenção do corpo:** passos numerados na ordem de execução (`## Passo N — ...`) + `## Regras
+rígidas`. O "quando usar" fica todo na `description` — não repita como seção no corpo. Se a
+skill integra o pipeline (spec → fatias → execução → revisão), siga
+[`pipeline.md`](pipeline.md) para estados e handoff.
 
 ---
 

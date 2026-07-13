@@ -10,6 +10,9 @@ description: >
   arquivo de spec pronto para revisão antes de qualquer implementação. Não espere
   o usuário pedir explicitamente "levantamento de requisitos" — se a mensagem
   parece ser o início de uma tarefa de desenvolvimento, use esta skill.
+  NÃO dispare para mudanças triviais e autoexplicativas (renomear símbolo, corrigir
+  typo, ajuste de texto/estilo local, one-liner óbvio): essas vão direto para
+  implementação, sem spec.
 ---
  
 # Agente de Levantamento de Requisitos
@@ -26,6 +29,20 @@ Determine a raiz do projeto em que o usuário está trabalhando:
 - Se o usuário mencionar um caminho ou repositório, use esse.
 - Se não houver projeto identificável (ex: só uma ideia solta, sem código), pergunte
   onde fica o projeto — ou siga sem contexto de código e registre isso na spec.
+
+## Passo 0.5 — Triagem: isso precisa de spec?
+
+Antes de investir no fluxo completo, avalie se a tarefa é trivial e autoexplicativa
+(renomear símbolo, corrigir typo, ajuste de texto/estilo local, one-liner óbvio, mudança
+sem face de usuário nem risco). Se for:
+
+- Diga em uma linha que a tarefa é trivial e não justifica uma spec.
+- Aponte direto o que fazer (ou encaminhe para implementação) e **encerre** — não crie
+  `.tasks/`, não faça as 5 perguntas, não gere `spec.md`.
+
+Na dúvida entre trivial e não-trivial, trate como não-trivial e siga o fluxo. A triagem
+existe para evitar cerimônia onde ela só atrapalha, não para pular spec de algo real.
+
 ## Passo 1 — Descobrir e carregar contexto do projeto
  
 Antes de fazer qualquer pergunta, procure na raiz do projeto (e em `docs/` ou
@@ -82,6 +99,10 @@ em kebab-case derivado do nome da tarefa (ex: tarefa "Checkout em duas etapas"
  
 Essa pasta é a "casa" da tarefa: mais tarde, a skill `to-issues` quebra esta
 spec em tasks menores (`00-index.md`, `01-*.md`, ...) dentro da mesma pasta.
+ 
+Guarda de colisão: antes de escrever, verifique se `.tasks/<slug-da-tarefa>/spec.md`
+já existe. Se existir, **não sobrescreva** — mostre a spec atual e pergunte se é para
+(a) revisá-la, (b) criar um slug novo, ou (c) substituir. Só então prossiga.
  
 Exceção: se o projeto já tiver um local convencionado para specs (ex:
 `docs/specs/`, `rfcs/`), pergunte ao usuário qual padrão seguir.
@@ -163,7 +184,7 @@ Após criar o arquivo, apresente ao usuário:
 1. O caminho do arquivo gerado
 2. Um resumo em 3-5 linhas do que será feito
 3. O seam escolhido para os testes (e por quê) — peça confirmação explícita se você propôs um seam novo em vez de reutilizar um existente
-3. Os principais riscos ou decisões técnicas
+4. Os principais riscos ou decisões técnicas
 Termine com: **"Revise o arquivo e diga 'aprovar' quando estiver pronto para o agente de dev começar — ou me diga o que ajustar."**
  
 Não inicie nenhuma implementação. Seu trabalho termina aqui.
